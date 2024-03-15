@@ -78,18 +78,30 @@ function fetchForecast(data) {
       for (const weather of rData.list) {
         const then = dayjs.unix(weather.dt);
         if (then.hour() === 11) {
-          const weatherEl = $("<div>");
-          weatherEl.append($(`<h4>${then.format("MM/DD/YYYY")}</h4>`));
-          weatherEl.append($(`<p>Temp: ${weather.main.temp} °F</p>`));
-          weatherEl.append($(`<p>Wind: ${weather.wind.speed} MPH</p>`));
-          weatherEl.append($(`<p>Humidity: ${weather.main.humidity} %</p>`));
-          weatherEl.addClass(
-            "bg-dark text-light col-12 col-sm-6 col-md-4 col-lg-2"
-          );
-          forecastEl.append(weatherEl);
+          createWeatherElement({
+            time: then.format("MM/DD/YYYY"),
+            temp: weather.main.temp,
+            wind: weather.wind.speed,
+            humidity: weather.main.humidity,
+          });
         }
       }
     });
+}
+
+function createWeatherElement(data) {
+  const weatherEl = $("<div>");
+  weatherEl.append($(`<h4>${data.time}</h4>`));
+  weatherEl.append($(`<p>Temp: ${data.temp} °F</p>`));
+  weatherEl.append($(`<p>Wind: ${data.wind} MPH</p>`));
+  weatherEl.append($(`<p>Humidity: ${data.humidity} %</p>`));
+
+  const weatherContainerEl = $("<div>");
+  weatherContainerEl.addClass(
+    "bg-dark text-light col-12 col-sm-6 col-md-4 col-lg-2 rounded"
+  );
+  weatherContainerEl.append(weatherEl);
+  forecastEl.append(weatherContainerEl);
 }
 
 function fetchWeather(data) {
@@ -108,6 +120,14 @@ function fetchWeather(data) {
     });
 }
 
+onload = () => {
+  createWeatherElement({
+    time: "0",
+    temp: 0,
+    wind: 0,
+    humidity: "100",
+  });
+};
 //User Interactions
 inputSearch.on("input", handleSearch);
 inputSearch.on("search", clearSuggestions);
