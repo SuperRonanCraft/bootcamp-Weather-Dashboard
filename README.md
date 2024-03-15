@@ -1,6 +1,6 @@
 # Weather Dashboard
 
-Visit [Deployment](<[LINK](https://superronancraft.github.io/bootcamp-Weather-Dashboard/)>) on Github Pages  
+Visit [Deployment](https://superronancraft.github.io/bootcamp-Weather-Dashboard/) on Github Pages  
 Source code to this project can be located [here](index.html)
 
 ## Description of Project
