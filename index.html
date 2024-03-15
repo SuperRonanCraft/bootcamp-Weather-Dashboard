@@ -17,9 +17,9 @@
     </header>
     <main class="container-fluid">
       <div class="row">
-        <div class="col-4 text-center">
+        <div class="col-sm-4 text-center">
           <h2 class="h2">Search via City</h2>
-          <div>
+          <div id="search-container col-12">
             <input
               id="search-input"
               class="w-100 rounded form-control"
@@ -27,20 +27,30 @@
               placeholder="Virginia"
               aria-label="Search"
             />
-            <div id="autocomplete-box">
-              <li>Test1</li>
-              <li>Test123123</li>
-              <li>Test13123</li>
-            </div>
+            <div id="autocomplete-box"></div>
           </div>
           <input
             id="search-button"
-            class="btn btn-primary w-100 my-2 py-1"
+            class="btn btn-primary w-100 my-2 pt-1"
             type="button"
             value="Search"
           />
         </div>
-        <div class="col-8"></div>
+        <div class="container-fluid col-sm-8 pt-3">
+          <div class="row">
+            <div class="col-12 card">
+              <h2 id="city" class="card-header">Choose a Destination...</h2>
+              <div class="card-text">
+                <p id="temp"></p>
+                <p id="wind"></p>
+                <p id="humidity"></p>
+              </div>
+            </div>
+            <div class="container col-12">
+              <div id="forecast" class="row"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <script
@@ -49,6 +59,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="assets/js/script.js"></script>
   </body>
 </html>
