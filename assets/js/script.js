@@ -51,6 +51,7 @@ function clearSuggestions() {
 //Suggestions for cities that match users input
 function handleSearch(event) {
   if (slowedFetch !== null) clearTimeout(slowedFetch);
+  //Timeout to give user a chance to type more info before fetching cities
   slowedFetch = setTimeout(fetchGeocode, 300);
 }
 
