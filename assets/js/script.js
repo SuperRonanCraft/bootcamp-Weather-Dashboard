@@ -12,7 +12,7 @@ function fetchGeocode() {
   slowedFetch = null;
   const input = inputSearch.val();
   if (input === "") return;
-  const url = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=8&appid=${apiKey}`;
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=8&appid=${apiKey}`;
   fetch(url)
     .then((response) => {
       return response.json();
@@ -72,8 +72,6 @@ function fetchForecast(data) {
       return response.json();
     })
     .then((rData) => {
-      // console.log(rData.list);
-      const now = dayjs();
       forecastEl.empty();
       for (const weather of rData.list) {
         const then = dayjs.unix(weather.dt);
@@ -83,7 +81,10 @@ function fetchForecast(data) {
             temp: weather.main.temp,
             wind: weather.wind.speed,
             humidity: weather.main.humidity,
+            icon: weather.weather[0].icon,
+            desc: weather.weather[0].description,
           });
+          console.log(weather);
         }
       }
     });
@@ -91,17 +92,31 @@ function fetchForecast(data) {
 
 function createWeatherElement(data) {
   const weatherEl = $("<div>");
-  weatherEl.append($(`<h4>${data.time}</h4>`));
-  weatherEl.append($(`<p>Temp: ${data.temp} °F</p>`));
-  weatherEl.append($(`<p>Wind: ${data.wind} MPH</p>`));
-  weatherEl.append($(`<p>Humidity: ${data.humidity} %</p>`));
+  if (data.time)
+    weatherEl.append($(`<h4>${data.time}</h4>`).addClass("text-center"));
+  if (data.temp) weatherEl.append($(`<p>Temp: ${data.temp} °F</p>`));
+  if (data.wind) weatherEl.append($(`<p>Wind: ${data.wind} MPH</p>`));
+  if (data.humidity) weatherEl.append($(`<p>Humidity: ${data.humidity} %</p>`));
+  if (data.icon) {
+    const iconUrl = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
+    weatherEl.append($(`<img src="${iconUrl}">`).addClass("mx-auto d-block"));
+  }
+  if (data.desc)
+    weatherEl.append($(`<h6>${data.desc}</h6>`).addClass("text-center"));
 
   const weatherContainerEl = $("<div>");
   weatherContainerEl.addClass(
-    "bg-dark text-light col-12 col-sm-6 col-md-4 col-lg-2 rounded"
+    "bg-dark text-light col-12 col-sm-6 col-md-4 col-lg-2 rounded mb-3 mx-2"
   );
   weatherContainerEl.append(weatherEl);
   forecastEl.append(weatherContainerEl);
+}
+
+function setWeather(data) {
+  if (data.city) $("#city").text(data.city);
+  $("#temp").text(`Temp: ${data.temp} °F`);
+  $("#wind").text(`Wind: ${data.wind} MPH`);
+  $("#humidity").text(`Humidity: ${data.humidity} %`);
 }
 
 function fetchWeather(data) {
@@ -111,22 +126,25 @@ function fetchWeather(data) {
       return response.json();
     })
     .then((rData) => {
-      console.log(rData);
-      $("#city").text(rData.name);
-      $("#temp").text(`Temp: ${rData.main.temp} °F`);
-      $("#wind").text(`Wind: ${rData.wind.speed} MPH`);
-      $("#humidity").text(`Humidity: ${rData.main.humidity} %`);
-      // console.log(data);
+      setWeather({
+        city: rData.name,
+        temp: rData.main.temp,
+        wind: rData.wind.speed,
+        humidity: rData.main.humidity,
+      });
     });
 }
 
+//Set default displayed data on load
 onload = () => {
-  createWeatherElement({
-    time: "0",
-    temp: 0,
-    wind: 0,
-    humidity: "100",
-  });
+  for (let i = 0; i < 5; i++) {
+    createWeatherElement({
+      time: `Day: ${i + 1}`,
+      temp: "0",
+      wind: "0",
+      humidity: "100",
+    });
+  }
 };
 //User Interactions
 inputSearch.on("input", handleSearch);

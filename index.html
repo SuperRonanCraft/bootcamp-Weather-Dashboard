@@ -9,6 +9,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
   </head>
 
   <body>
@@ -32,17 +33,23 @@
             </div>
           </div>
         </div>
-        <div class="container-fluid col-sm-8">
-          <div class="row">
-            <div class="col-12 card">
-              <h2 id="city" class="h2 card-header">Choose a Destination...</h2>
-              <div class="card-text">
-                <p id="temp"></p>
-                <p id="wind"></p>
-                <p id="humidity"></p>
-              </div>
-              <div class="container col-12">
-                <div id="forecast" class="row"></div>
+        <div class="col-12 col-sm-8">
+          <div class="card mb-2">
+            <h2 id="city" class="h2 card-header">Choose a Destination...</h2>
+            <div class="card-text mx-2 mt-3">
+              <p id="temp">Temp: 0 °F</p>
+              <p id="wind">Wind: 0 MPH</p>
+              <p id="humidity">Humidity: 100 %</p>
+            </div>
+          </div>
+          <div class="card">
+            <h2 class="card-header text-center">5-Day Forecast</h2>
+            <div class="container">
+              <div class="row">
+                <div
+                  id="forecast"
+                  class="row justify-content-center card-text mt-3"
+                ></div>
               </div>
             </div>
           </div>
