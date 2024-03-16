@@ -21,6 +21,7 @@
         <div class="col-12 col-sm-4">
           <div class="text-center card bg-light">
             <h2 class="h2 card-header">Search via City</h2>
+            <!-- Search results input -->
             <div class="container" id="search-container">
               <input
                 id="search-input"
@@ -29,7 +30,7 @@
                 placeholder="Illinois"
                 aria-label="Search"
               />
-              <!-- Autocomplete Box -->
+              <!-- Autocomplete/Suggestions Element -->
               <div id="autocomplete-box"></div>
             </div>
             <hr />
@@ -44,6 +45,7 @@
             <h2 id="city" class="h2 card-header">Choose a Destination...</h2>
             <div class="container mt-3">
               <div class="row">
+                <!-- Current weather conditions elements -->
                 <div class="col-12 col-sm-4 card-text">
                   <p id="temp">Temp: 0 °F</p>
                   <p id="wind">Wind: 0 MPH</p>
@@ -71,18 +73,21 @@
           <div class="card">
             <h2 class="card-header text-center">5-Day Forecast</h2>
             <div class="container">
+              <!-- 5 Day forecast element -->
               <div id="forecast" class="row justify-content-center mt-3"></div>
             </div>
           </div>
         </div>
       </div>
     </main>
+    <!-- JQuery - I know, I shouldn't use it, but I like it.. -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <!-- Day.JS -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="assets/js/script.js"></script>
   </body>
