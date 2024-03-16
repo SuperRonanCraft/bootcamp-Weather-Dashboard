@@ -5,9 +5,13 @@ Source code to this project can be located [here](index.html)
 
 ## Description of Project
 
-Small description
+A small Weather dashboard web app
 
-- List of added items
+- Added the ability to search for any city
+- Display current weather conditions for the selected city
+- Ability to view a list of recent search history
+- See a 5 day forcast of conditions at midday (12 PM)
+- When refreshing you are presented with your most recent search result
 
 ## Screenshot of Webpage
 
