@@ -17,7 +17,7 @@
       <h1 class="h1">Weather Dashboard</h1>
     </header>
     <main class="container-fluid">
-      <div class="row mt-2">
+      <div class="row my-2">
         <div class="col-12 col-sm-4">
           <div class="text-center card bg-light">
             <h2 class="h2 card-header">Search via City</h2>
@@ -29,7 +29,13 @@
                 placeholder="Illinois"
                 aria-label="Search"
               />
+              <!-- Autocomplete Box -->
               <div id="autocomplete-box"></div>
+            </div>
+            <hr />
+            <div>
+              <h4>History</h4>
+              <div id="history" class="px-2"></div>
             </div>
           </div>
         </div>
@@ -45,12 +51,15 @@
                 </div>
                 <div class="container col-12 col-sm-8">
                   <div class="row">
-                    <h3 id="status" class="col-12 text-center">Sunny</h3>
+                    <h3 id="status" class="capitalize col-12 text-center">
+                      Sunny
+                    </h3>
                     <div class="col-12">
+                      <!-- Icon/Image for current weather -->
                       <img
                         src="http://openweathermap.org/img/wn/01d@2x.png"
                         alt="Weather Status"
-                        class="m-auto d-block"
+                        class="bg-dark rounded m-auto d-block mb-2"
                         id="weather-icon"
                       />
                     </div>

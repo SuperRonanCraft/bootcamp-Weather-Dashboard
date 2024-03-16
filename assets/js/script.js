@@ -2,6 +2,7 @@
 const inputSearch = $("#search-input");
 const autoBox = $("#autocomplete-box");
 const forecastEl = $("#forecast");
+const historyEl = $("#history");
 const apiKey = "81f5de324935a1e9a4ba6383132f2d99";
 // const geocodeUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=8&appid=${apiKey}`;
 // const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
@@ -56,8 +57,30 @@ function handleSuggestionClick(event) {
 
 function addHistory(data) {
   const history = JSON.parse(localStorage.getItem("cityHistory")) || [];
-  history.push(data);
+
+  //Remove previously searched city and move it to the top
+  for (const previousCity of history) {
+    if (previousCity.lat === data.lat && previousCity.lon === data.lon) {
+      history.splice(history.indexOf(previousCity), 1);
+      break;
+    }
+  }
+
+  history.unshift(data);
   localStorage.setItem("cityHistory", JSON.stringify(history));
+  showHistory();
+}
+
+function showHistory() {
+  const history = JSON.parse(localStorage.getItem("cityHistory")) || [];
+  historyEl.empty();
+  for (const previousCity of history) {
+    historyEl.append(
+      $(`<button>${previousCity.city} - ${previousCity.state}</button>`)
+        .addClass("w-100 btn btn-secondary my-1")
+        .data("data", previousCity)
+    );
+  }
 }
 
 function getWeather(data) {
@@ -118,7 +141,7 @@ function createWeatherElement(data) {
 
   //const weatherContainerEl = $("<div>");
   weatherEl.addClass(
-    "card bg-secondary text-light col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 rounded mb-3"
+    "p-0 card bg-secondary text-light col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 rounded mb-3"
   );
   //weatherContainerEl.append(weatherEl);
   forecastEl.append(weatherEl.addClass("p-0"));
@@ -129,7 +152,8 @@ function getIcon(iconId) {
 }
 
 function setWeather(data) {
-  if (data.city) $("#city").text(data.city);
+  if (data.city)
+    $("#city").text(`${data.city} - ${dayjs().format("MM/DD/YYYY")}`);
   if (data.temp) $("#temp").html(`Temp: <strong>${data.temp}</strong> °F`);
   if (data.wind) $("#wind").html(`Wind: <strong>${data.wind}</strong> MPH`);
   if (data.humidity)
@@ -157,8 +181,17 @@ function fetchWeather(data) {
     });
 }
 
+function loadLastHistory() {
+  const history = JSON.parse(localStorage.getItem("cityHistory")) || [];
+  if (history === null) return;
+  const lastCity = history[0];
+  getWeather(lastCity);
+}
+
 //Set default displayed data on load
 onload = () => {
+  showHistory();
+  loadLastHistory();
   for (let i = 0; i < 5; i++) {
     createWeatherElement({
       time: "mm/dd/yy",
@@ -172,3 +205,4 @@ onload = () => {
 inputSearch.on("input", handleSearch);
 inputSearch.on("search", clearSuggestions);
 autoBox.on("click", handleSuggestionClick);
+historyEl.on("click", handleSuggestionClick);

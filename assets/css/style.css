@@ -9,3 +9,11 @@
   margin: 0;
   cursor: pointer;
 }
+
+#forecast .card {
+  margin: 5px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
