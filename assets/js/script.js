@@ -93,30 +93,49 @@ function fetchForecast(data) {
 function createWeatherElement(data) {
   const weatherEl = $("<div>");
   if (data.time)
-    weatherEl.append($(`<h4>${data.time}</h4>`).addClass("text-center"));
-  if (data.temp) weatherEl.append($(`<p>Temp: ${data.temp} °F</p>`));
-  if (data.wind) weatherEl.append($(`<p>Wind: ${data.wind} MPH</p>`));
-  if (data.humidity) weatherEl.append($(`<p>Humidity: ${data.humidity} %</p>`));
+    weatherEl.append(
+      $(`<h4>${data.time}</h4>`).addClass("card-header text-center")
+    );
+  if (data.temp)
+    weatherEl.append(
+      $(`<p><strong>Temp: ${data.temp} °F</strong></p>`).addClass("px-2")
+    );
+  if (data.wind)
+    weatherEl.append(
+      $(`<p><strong>Wind: ${data.wind} MPH</strong></p>`).addClass("px-2")
+    );
+  if (data.humidity)
+    weatherEl.append(
+      $(`<p><strong>Humidity: ${data.humidity} %</strong></p>`).addClass("px-2")
+    );
   if (data.icon) {
-    const iconUrl = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
-    weatherEl.append($(`<img src="${iconUrl}">`).addClass("mx-auto d-block"));
+    weatherEl.append(
+      $(`<img src="${getIcon(data.icon)}">`).addClass("mx-auto d-block")
+    );
   }
   if (data.desc)
     weatherEl.append($(`<h6>${data.desc}</h6>`).addClass("text-center"));
 
-  const weatherContainerEl = $("<div>");
-  weatherContainerEl.addClass(
-    "bg-dark text-light col-12 col-sm-6 col-md-4 col-lg-2 rounded mb-3 mx-2"
+  //const weatherContainerEl = $("<div>");
+  weatherEl.addClass(
+    "card bg-secondary text-light col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 rounded mb-3"
   );
-  weatherContainerEl.append(weatherEl);
-  forecastEl.append(weatherContainerEl);
+  //weatherContainerEl.append(weatherEl);
+  forecastEl.append(weatherEl.addClass("p-0"));
+}
+
+function getIcon(iconId) {
+  return `https://openweathermap.org/img/wn/${iconId}@2x.png`;
 }
 
 function setWeather(data) {
   if (data.city) $("#city").text(data.city);
-  $("#temp").text(`Temp: ${data.temp} °F`);
-  $("#wind").text(`Wind: ${data.wind} MPH`);
-  $("#humidity").text(`Humidity: ${data.humidity} %`);
+  if (data.temp) $("#temp").html(`Temp: <strong>${data.temp}</strong> °F`);
+  if (data.wind) $("#wind").html(`Wind: <strong>${data.wind}</strong> MPH`);
+  if (data.humidity)
+    $("#humidity").html(`Humidity: <strong>${data.humidity}</strong> %`);
+  if (data.desc) $("#status").text(`${data.desc}`);
+  if (data.icon) $("#weather-icon").attr("src", getIcon(data.icon));
 }
 
 function fetchWeather(data) {
@@ -131,7 +150,10 @@ function fetchWeather(data) {
         temp: rData.main.temp,
         wind: rData.wind.speed,
         humidity: rData.main.humidity,
+        desc: rData.weather[0].description,
+        icon: rData.weather[0].icon,
       });
+      console.log(rData);
     });
 }
 
@@ -139,7 +161,7 @@ function fetchWeather(data) {
 onload = () => {
   for (let i = 0; i < 5; i++) {
     createWeatherElement({
-      time: `Day: ${i + 1}`,
+      time: "mm/dd/yy",
       temp: "0",
       wind: "0",
       humidity: "100",

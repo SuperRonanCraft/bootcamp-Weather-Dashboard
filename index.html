@@ -36,21 +36,33 @@
         <div class="col-12 col-sm-8">
           <div class="card mb-2">
             <h2 id="city" class="h2 card-header">Choose a Destination...</h2>
-            <div class="card-text mx-2 mt-3">
-              <p id="temp">Temp: 0 °F</p>
-              <p id="wind">Wind: 0 MPH</p>
-              <p id="humidity">Humidity: 100 %</p>
+            <div class="container mt-3">
+              <div class="row">
+                <div class="col-12 col-sm-4 card-text">
+                  <p id="temp">Temp: 0 °F</p>
+                  <p id="wind">Wind: 0 MPH</p>
+                  <p id="humidity">Humidity: 100 %</p>
+                </div>
+                <div class="container col-12 col-sm-8">
+                  <div class="row">
+                    <h3 id="status" class="col-12 text-center">Sunny</h3>
+                    <div class="col-12">
+                      <img
+                        src="http://openweathermap.org/img/wn/01d@2x.png"
+                        alt="Weather Status"
+                        class="m-auto d-block"
+                        id="weather-icon"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card">
             <h2 class="card-header text-center">5-Day Forecast</h2>
             <div class="container">
-              <div class="row">
-                <div
-                  id="forecast"
-                  class="row justify-content-center card-text mt-3"
-                ></div>
-              </div>
+              <div id="forecast" class="row justify-content-center mt-3"></div>
             </div>
           </div>
         </div>
